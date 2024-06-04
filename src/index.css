@@ -5,7 +5,11 @@
 	--white-color: #ffffff;
 	--text-color: #000000;
 	--text-secondary-color: #5b5b5e;
-	--devider-color: #d4d6e0;
+	--text-color-grey: #c4c4c4;
+	--text-color-light-grey: #9ea1b1;
+	--divider-color: #d4d6e0;
+	--bg-color-grey: #fcfcfd;
+	--bg-color-light-grey: #efefef;
 
 	/* Fonts */
 	--font: 'Open Sans', sans-serif;
