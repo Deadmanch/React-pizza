@@ -1,17 +1,35 @@
+import { useEffect, useState } from 'react';
 import { Heading } from '../../components/Heading/Heading';
-import ProductCard from '../../components/ProductCard/ProductCard';
 import Search from '../../components/Search/Search';
 import { PREFIX } from '../../helpers/API';
+import { IProduct } from '../../interfaces/product.interface';
 import styles from './Menu.module.css';
+import axios, { AxiosError } from 'axios';
+import { MenuList } from './MenuList/MenuList';
 
 export const Menu = () => {
+	const [products, setProducts] = useState<IProduct[]>([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState<string | undefined>(undefined);
 	const getMenu = async () => {
-		const res = await fetch(`${PREFIX}/products`);
-		if (!res.ok) throw new Error('Failed to fetch menu');
-
-		const data = await res.json();
-		
+		try {
+			setIsLoading(true);
+			const { data } = await axios.get<IProduct[]>(`${PREFIX}/products`);
+			setProducts(data);
+			setIsLoading(false);
+		} catch (e) {
+			console.error(e);
+			if (e instanceof AxiosError) {
+				setError(e.message);
+			}
+			setIsLoading(false);
+			return;
+		}
 	};
+
+	useEffect(() => {
+		getMenu();
+	}, []);
 	return (
 		<>
 			<div className={styles.head}>
@@ -19,15 +37,12 @@ export const Menu = () => {
 				<Search placeholder='Введите блюдо или состав' />
 			</div>
 			<div>
-				<ProductCard
-					title='Наслаждение'
-					id={1}
-					description='Салями, руккола, помидоры, оливки'
-					price={300}
-					rating={4.5}
-					img='/product/product-01.png'
-				/>
+				{error && <p className={styles.error}>{error}</p>}
+				{!isLoading && <MenuList products={products} />}
+				{isLoading && <p>Загружаем продукты...</p>}
 			</div>
 		</>
 	);
 };
+
+export default Menu;

@@ -18,14 +18,14 @@
 	gap: 10px;
 }
 
-.title {
+.name {
 	font-weight: 600;
 	font-size: 18px;
 	color: var(--text-color);
 	font-style: normal;
 }
 
-.description {
+.ingredients {
 	font-weight: 400;
 	font-size: 14px;
 	color: var(--text-secondary-color);

@@ -6,7 +6,14 @@ const ProductCard = (props: IProductCardProps) => {
 	return (
 		<Link to={`/product/${props.id}`}>
 			<div className={styles.card}>
-				<div className={styles.head} style={{ backgroundImage: `url(${props.img})` }}>
+				<div
+					className={styles.head}
+					style={{
+						backgroundImage: `url(${props.image})`,
+						backgroundSize: 'cover',
+						backgroundRepeat: 'no-repeat'
+					}}
+				>
 					<div className={styles.price}>
 						{props.price}&nbsp;
 						<span className={styles.currency}>₽</span>
@@ -20,8 +27,8 @@ const ProductCard = (props: IProductCardProps) => {
 					</div>
 				</div>
 				<div className={styles.bottom}>
-					<h3 className={styles.title}>{props.title}</h3>
-					<p className={styles.description}>{props.description}</p>
+					<h3 className={styles.name}>{props.name}</h3>
+					<p className={styles.ingredients}>{props.ingredients}</p>
 				</div>
 			</div>
 		</Link>

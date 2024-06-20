@@ -3,3 +3,10 @@
 	align-items: center;
 	justify-content: space-between;
 }
+
+.error {
+	color: red;
+	font-size: 20px;
+	font-weight: 400;
+	margin-top: 20px;
+}

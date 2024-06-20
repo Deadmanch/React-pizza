@@ -1,7 +1,7 @@
 export interface IProductCardProps {
-	title: string;
-	description: string;
-	img: string;
+	name: string;
+	ingredients: string;
+	image: string;
 	price: number;
 	rating: number;
 	id: number;
