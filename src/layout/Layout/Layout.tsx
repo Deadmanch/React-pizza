@@ -2,12 +2,23 @@ import cn from 'classnames';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import styles from './Layout.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
+import { getProfile, userActions } from '../../store/user.slice';
+import { useEffect } from 'react';
 
 export const Layout = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch<AppDispatch>();
+	const profile = useSelector((s: RootState) => s.user.profile);
+	const items = useSelector((s: RootState) => s.cart.items);
+
+	useEffect(() => {
+		dispatch(getProfile());
+	}, [dispatch]);
 
 	const logout = () => {
-		localStorage.removeItem('jwt');
+		dispatch(userActions.logout());
 		navigate('/auth/login');
 	};
 
@@ -16,8 +27,8 @@ export const Layout = () => {
 			<div className={styles.sidebar}>
 				<div className={styles.user}>
 					<img className={styles.avatar} src='/user.png' alt='Иконка пользователя' />
-					<div className={styles.name}>Данил Степанов</div>
-					<div className={styles.email}>stepanov.d@mail.ru</div>
+					<div className={styles.name}>{profile?.name}</div>
+					<div className={styles.email}>{profile?.email}</div>
 				</div>
 				<div className={styles.menu}>
 					<NavLink
@@ -33,6 +44,7 @@ export const Layout = () => {
 					>
 						<img src='/icons/cart-icon.svg' alt='Иконка корзины' />
 						Корзина
+						<span className={styles.count}>{items.reduce((acc, item) => acc + item.count, 0)}</span>
 					</NavLink>
 				</div>
 				<Button className={styles.exit} onClick={logout}>
